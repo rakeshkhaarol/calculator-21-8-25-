@@ -87,6 +87,7 @@ let reducerFunction = (oldState, action) => {
     leftValue: String(res),   // ✅ result ko leftValue bana diya
     rightValue: '',
     operator: '',
+     expression: '' 
     // expression: `${newState.leftValue}${newState.operator}${newState.rightValue}=${res}`  // ✅ full equation show
   };
 
