@@ -33,10 +33,20 @@ let reducerFunction = (oldState, action) => {
       }
       break;
     case DIVIDE:
-      alert('divide')
+      // alert('divide')
+      return{
+
+        ...newState,
+        operator:'/'
+      }
+
       break;
     case MULTIPLICATION:
-      alert('multiplication')
+      // alert('multiplication')
+      return{
+        ...newState,
+        operator:'*'
+      }
       break;
     case ADDITION:
       // alert('addition')
@@ -46,31 +56,40 @@ let reducerFunction = (oldState, action) => {
       }
       break;
     case SUBTRACTION:
-      alert('SUBTRACTION')
+     // alert('SUBTRACTION')
+     return{
+      ...newState,
+      operator:'-'
+     }
       break
-    case RESULT:
-      // alert('result')
-      switch (newState.operator) {
-        case '+':
-          const sum = parseInt(newState.leftValue) + parseInt(newState.rightValue);
-          return {
-            ...newState,
-            result: sum,
-            leftValue: String(sum),  // ✅ result ko leftValue bhi bana do
-            rightValue: '',
-            operator: ''
-          };
-          // return {
-          //   ...newState,
-          //   result: parseInt(newState.leftValue) + parseInt(newState.rightValue)
-
-          // }
-          break;
-
-        default:
-          break;
-      }
+   case RESULT:
+  let res = null;
+  switch (newState.operator) {
+    case '+':
+      res = parseFloat(newState.leftValue) + parseFloat(newState.rightValue);
       break;
+    case '-':
+      res = parseFloat(newState.leftValue) - parseFloat(newState.rightValue);
+      break;
+    case '*':
+      res = parseFloat(newState.leftValue) * parseFloat(newState.rightValue);
+      break;
+    case '/':
+      res = parseFloat(newState.leftValue) / (parseFloat(newState.rightValue) || 1);
+      break;
+    default:
+      return newState;
+  }
+
+  return {
+    ...newState,
+    result: res,
+    leftValue: String(res),   // ✅ result ko leftValue bana diya
+    rightValue: '',
+    operator: '',
+    // expression: `${newState.leftValue}${newState.operator}${newState.rightValue}=${res}`  // ✅ full equation show
+  };
+
     case NUMBER:
       if (newState.operator === '') {
         return {
@@ -106,7 +125,7 @@ function App() {
     <>
       {console.log('newState ----->>>>', newState)}
       <div className="container">
-        con
+        {/* <h1>calculator</h1> */}
         <form action="" name="calc" className="calculator">
           <input
             type="text"
@@ -117,7 +136,7 @@ function App() {
               newState.result !== null && newState.rightValue === ''
                 ? `${newState.leftValue}${newState.operator}${newState.rightValue}`
                 : `${newState.leftValue}${newState.operator}${newState.rightValue}`
-            }
+            } 
           />
 
           <span className="num clear" onClick={() => { dispatch({ type: CLEAR }) }}><i>C</i></span>
