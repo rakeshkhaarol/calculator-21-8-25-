@@ -52,10 +52,19 @@ let reducerFunction = (oldState, action) => {
       // alert('result')
       switch (newState.operator) {
         case '+':
+          const sum = parseInt(newState.leftValue) + parseInt(newState.rightValue);
           return {
             ...newState,
-            result: parseInt(newState.leftValue) + parseInt(newState.rightValue)
-          }
+            result: sum,
+            leftValue: String(sum),  // ✅ result ko leftValue bhi bana do
+            rightValue: '',
+            operator: ''
+          };
+          // return {
+          //   ...newState,
+          //   result: parseInt(newState.leftValue) + parseInt(newState.rightValue)
+
+          // }
           break;
 
         default:
@@ -102,11 +111,13 @@ function App() {
           <input
             type="text"
             className="value"
-
-            value={newState.result === 0 ? newState.leftValue + newState.operator + newState.rightValue : newState.result}
-
             readOnly
             name="txt"
+            value={
+              newState.result !== null && newState.rightValue === ''
+                ? `${newState.leftValue}${newState.operator}${newState.rightValue}`
+                : `${newState.leftValue}${newState.operator}${newState.rightValue}`
+            }
           />
 
           <span className="num clear" onClick={() => { dispatch({ type: CLEAR }) }}><i>C</i></span>
